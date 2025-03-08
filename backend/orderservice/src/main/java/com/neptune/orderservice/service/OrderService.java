@@ -48,7 +48,8 @@ public class OrderService {
 
         // Save order if stock is available
         Order order = Order.builder()
-            .product(requestDto.getProductId())
+            .productId(requestDto.getProductId())
+            .productName(requestDto.getProductName())
             .quantity(requestDto.getQuantity())
             .status(OrderStatus.COMPLETED)
             .build();
@@ -70,7 +71,8 @@ public class OrderService {
     private OrderResponseDto mapToDto(Order order) {
         return OrderResponseDto.builder()
             .id(order.getId())
-            .product(order.getProduct())
+            .productId(order.getProductId())
+            .productName(order.getProductName())
             .quantity(order.getQuantity())
             .status(order.getStatus())
             .build();

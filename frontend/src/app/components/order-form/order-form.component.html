@@ -1,0 +1,49 @@
+<div class="order-container">
+  <h2>Place an Order</h2>
+
+  <!-- Product Selection -->
+  <div>
+    <label for="product">Product</label>
+    <select id="product" [(ngModel)]="selectedProductId">
+      <option *ngFor="let product of products" [value]="product.id">
+        {{ product.name }} (Stock: {{ product.stockQuantity }})
+      </option>
+    </select>
+  </div>
+
+  <!-- Quantity Selection -->
+  <div>
+    <label for="quantity">Quantity</label>
+    <input type="number" id="quantity" [(ngModel)]="quantity" min="1" required>
+  </div>
+
+  <!-- Submit Button -->
+  <button (click)="placeOrder()">Submit Order</button>
+
+  <!-- Toast Message -->
+  <div *ngIf="toastMessage" class="toast-message"
+    [ngClass]="{'toast-success': toastMessage.includes('success'), 'toast-error': toastMessage.includes('Error')}">
+    {{ toastMessage }}
+  </div>
+</div>
+
+<!-- Order List -->
+<div class="order-list">
+  <h3>Order List</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Product Name</th>
+        <th>Quantity</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ order.productName }}</td>
+        <td>{{ order.quantity }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

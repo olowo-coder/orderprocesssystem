@@ -23,11 +23,22 @@ public class InventoryService {
 
     @PostConstruct
     private void init() {
-        Product product = Product.builder()
+        Product product1 = Product.builder()
             .name("coke")
             .stockQuantity(3)
             .build();
-        productRepository.save(product);
+
+        Product product2 = Product.builder()
+            .name("book")
+            .stockQuantity(5)
+            .build();
+
+        Product product3 = Product.builder()
+            .name("iphone 16")
+            .stockQuantity(2)
+            .build();
+
+        productRepository.saveAll(List.of(product1, product2, product3));
     }
 
     @Transactional
