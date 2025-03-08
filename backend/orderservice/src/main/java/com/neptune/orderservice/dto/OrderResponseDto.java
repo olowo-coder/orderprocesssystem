@@ -14,7 +14,8 @@ import java.util.UUID;
 @Builder
 public class OrderResponseDto {
     private String id;
-    private String product;
+    private String productId;
+    private String productName;
     private int quantity;
     private OrderStatus status;
 }
