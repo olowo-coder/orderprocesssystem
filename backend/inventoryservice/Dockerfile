@@ -1,3 +1,3 @@
 FROM openjdk:11
-COPY target/orderservice.jar app.jar
+COPY target/inventoryservice.jar app.jar
 ENTRYPOINT ["java", "-jar", "/app.jar"]

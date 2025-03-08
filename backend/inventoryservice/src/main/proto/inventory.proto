@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package com.neptune.inventoryservice.grpc;
+
+service InventoryService {
+    rpc CheckStock (InventoryRequest) returns (InventoryResponse);
+}
+
+message InventoryRequest {
+    string product = 1;
+    int32 quantity = 2;
+}
+
+message InventoryResponse {
+    bool available = 1;
+}

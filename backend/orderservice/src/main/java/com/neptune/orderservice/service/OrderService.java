@@ -36,31 +36,26 @@ public class OrderService {
     public OrderResponseDto createOrder(OrderRequestDto requestDto) {
         log.info("Processing order: {}", requestDto);
 
-        try {
-            Inventory.InventoryRequest inventoryRequest = Inventory.InventoryRequest.newBuilder()
-                .setProduct(requestDto.getProduct())
-                .setQuantity(requestDto.getQuantity())
-                .build();
-            Inventory.InventoryResponse inventoryResponse = inventoryClient.checkStock(inventoryRequest);
+        Inventory.InventoryRequest inventoryRequest = Inventory.InventoryRequest.newBuilder()
+            .setProduct(requestDto.getProductId())
+            .setQuantity(requestDto.getQuantity())
+            .build();
+        Inventory.InventoryResponse inventoryResponse = inventoryClient.checkStock(inventoryRequest);
 
-            if (!inventoryResponse.getAvailable()) {
-                throw new OrderException("Stock Not Available");
-            }
-
-            // Save order if stock is available
-            Order order = Order.builder()
-                .product(requestDto.getProduct())
-                .quantity(requestDto.getQuantity())
-                .status(OrderStatus.COMPLETED)
-                .build();
-            orderRepository.save(order);
-
-            return new OrderResponseDto(requestDto.getProduct(), requestDto.getQuantity(), order.getStatus());
-
-        } catch (StatusRuntimeException e) {
-            log.error("Error calling Inventory Service: {}", e.getMessage());
-            throw new OrderException("Inventory Service Error");
+        if (!inventoryResponse.getAvailable()) {
+            throw new OrderException("Stock Not Available");
         }
+
+        // Save order if stock is available
+        Order order = Order.builder()
+            .product(requestDto.getProductId())
+            .quantity(requestDto.getQuantity())
+            .status(OrderStatus.COMPLETED)
+            .build();
+
+        orderRepository.save(order);
+
+        return mapToDto(order);
     }
 
     /**
@@ -68,7 +63,16 @@ public class OrderService {
      */
     public List<OrderResponseDto> getAllOrders(Pageable pageable) {
         return orderRepository.findAll(pageable).stream()
-            .map(order -> new OrderResponseDto(order.getProduct(), order.getQuantity(), order.getStatus()))
+            .map(this::mapToDto)
             .collect(Collectors.toList());
+    }
+
+    private OrderResponseDto mapToDto(Order order) {
+        return OrderResponseDto.builder()
+            .id(order.getId())
+            .product(order.getProduct())
+            .quantity(order.getQuantity())
+            .status(order.getStatus())
+            .build();
     }
 }
