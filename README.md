@@ -22,13 +22,13 @@ All services communicate using **REST and gRPC** and are containerized using **D
 
 ## **🛠️ Tech Stack**
 
-| Component  | Tech Used |
-|------------|------------|
-| **Frontend**  | Angular, TypeScript, Bootstrap |
+| Component  | Tech Used                         |
+|------------|-----------------------------------|
+| **Frontend**  | Angular, TypeScript, Bootstrap    |
 | **Backend**  | Java, Spring Boot, gRPC, REST API |
-| **Database** | PostgreSQL |
-| **Build Tools** | Maven |
-| **Containerization** | Docker, Docker Compose |
+| **Database** | H2 Database                       |
+| **Build Tools** | Maven                             |
+| **Containerization** | Docker, Docker Compose            |
 
 ---
 
