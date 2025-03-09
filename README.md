@@ -50,15 +50,16 @@ Make sure you have the following installed:
 
 ## **📦 Setup & Installation**
 
-### **1️⃣ Clone the Repository**
+### **1️ Clone the Repository**
 ```sh
 git clone https://github.com/olowo-coder/orderprocesssystem.git
-cd orderprocesssystem
 
-docker-compose up --build
+cd orderprocesssystem
 ```
 
-### **2 Run the docker command**
+### **2 Ensure you branch out to main**
+
+### **3 Run the docker command**
 ```sh
 docker-compose up --build
 ```
