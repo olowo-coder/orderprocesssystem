@@ -2,25 +2,23 @@
 FROM maven:3.8.5-openjdk-11 AS builder
 WORKDIR /app
 
-# Copy the Maven project files separately for caching
+# Copy the Maven project files
 COPY pom.xml .
-RUN mvn dependency:go-offline -B  # Pre-download dependencies
-
-# Copy the source code
 COPY src ./src
 
-# Build the application (skip tests to speed up)
+# Run Maven build (will download dependencies & compile)
 RUN mvn clean package -DskipTests
 
-# Use a lightweight JDK image for running the app
+# Use a lightweight JDK image for the final container
 FROM openjdk:11-jdk
 WORKDIR /app
 
 # Copy the built JAR from the builder stage
 COPY --from=builder /app/target/orderservice.jar app.jar
 
-# Expose the correct ports (8081 for Order Service, 9090 if needed)
+# Expose the application port
 EXPOSE 8081 9090
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
+
