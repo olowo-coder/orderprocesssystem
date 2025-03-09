@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  order-service:
+    build: ./backend/orderservice
+    container_name: order-service
+    restart: always
+    ports:
+      - "8081:8081"
+    networks:
+      - my-network
+
+  inventory-service:
+    build: ./backend/inventoryservice
+    container_name: inventory-service
+    restart: always
+    ports:
+      - "8082:8082"
+    networks:
+      - my-network
+
+  frontend:
+    build: ./frontend
+    container_name: frontend-app
+    restart: always
+    depends_on:
+      - order-service
+      - inventory-service
+    ports:
+      - "4200:80"
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    driver: bridge
