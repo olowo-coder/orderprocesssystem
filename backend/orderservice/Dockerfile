@@ -17,7 +17,7 @@ WORKDIR /app
 COPY --from=builder /app/target/orderservice.jar app.jar
 
 # Expose the application port
-EXPOSE 8082 9090
+EXPOSE 8081 9090
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
