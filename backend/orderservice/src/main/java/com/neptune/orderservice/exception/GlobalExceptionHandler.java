@@ -15,7 +15,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(StatusRuntimeException.class)
     public ResponseEntity<Object> handleGrpcException(StatusRuntimeException ex) {
-        log.error("gRPC Error: {}", ex.getMessage());
+        log.error("gRPC Error: ", ex);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
             .body(new GeneralResponse<>("Inventory Service Error", false));
     }
